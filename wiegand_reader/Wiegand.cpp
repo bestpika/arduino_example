@@ -8,17 +8,17 @@
 #define INTERRUPT_ATTR
 #endif
 
-bool Wiegand::flagDone;
-unsigned char Wiegand::dataBits[MAX_BITS];
-unsigned long Wiegand::counter;
-unsigned long Wiegand::_bitCount;
-unsigned long Wiegand:: bitCount;
-unsigned long Wiegand::_faciCode;
-unsigned long Wiegand:: faciCode;
-unsigned long Wiegand::_cardCode;
-unsigned long Wiegand:: cardCode;
-unsigned long Wiegand::_fullCode;
-unsigned long Wiegand:: fullCode;
+volatile bool Wiegand::flagDone;
+volatile unsigned char Wiegand::dataBits[MAX_BITS];
+volatile unsigned long Wiegand::counter;
+volatile unsigned long Wiegand::_bitCount;
+volatile unsigned long Wiegand:: bitCount;
+volatile unsigned long Wiegand::_faciCode;
+volatile unsigned long Wiegand:: faciCode;
+volatile unsigned long Wiegand::_cardCode;
+volatile unsigned long Wiegand:: cardCode;
+volatile unsigned long Wiegand::_fullCode;
+volatile unsigned long Wiegand:: fullCode;
 
 Wiegand::Wiegand() {}
 
@@ -31,7 +31,13 @@ void Wiegand::begin(int pin0, int pin1) {
   pinMode(pin1, INPUT);
   attachInterrupt(digitalPinToInterrupt(pin0), ISR_INT0, FALLING);
   attachInterrupt(digitalPinToInterrupt(pin1), ISR_INT1, FALLING);
+  // init
+  flagDone = false;
   counter = WAIT_TIME;
+  _bitCount = 0;
+  _faciCode = 0;
+  _cardCode = 0;
+  _fullCode = 0;
 }
 
 bool Wiegand::available() {

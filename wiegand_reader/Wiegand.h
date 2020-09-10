@@ -23,18 +23,18 @@ class Wiegand {
     static void ISR_INT1();
     bool parseBits();
   private:
-    static bool flagDone;
-    static unsigned char dataBits[MAX_BITS];
-    static unsigned long counter;
-    static unsigned long _bitCount;
-    static unsigned long  bitCount;
+    static volatile bool flagDone;
+    static volatile unsigned char dataBits[MAX_BITS];
+    static volatile unsigned long counter;
+    static volatile unsigned long _bitCount;
+    static volatile unsigned long  bitCount;
     // 卡片資料
-    static unsigned long _faciCode;
-    static unsigned long  faciCode;
-    static unsigned long _cardCode;
-    static unsigned long  cardCode;
-    static unsigned long _fullCode;
-    static unsigned long  fullCode;
+    static volatile unsigned long _faciCode;
+    static volatile unsigned long  faciCode;
+    static volatile unsigned long _cardCode;
+    static volatile unsigned long  cardCode;
+    static volatile unsigned long _fullCode;
+    static volatile unsigned long  fullCode;
 };
 
 #endif
